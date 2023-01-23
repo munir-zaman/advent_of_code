@@ -13,24 +13,14 @@ int priority(char c) {
 
 int common_badge_priority(string s1, string s2, string s3) {
     vector<int> p(52);
-    // need to identify the common char in s1, s2 and s3
 
-    // set p[priority - 1] to 1 if seen
-    for (char& c: s1) {
-        int priority_c = priority(c); // priority of char c
-        p[priority_c - 1] = 1;
-    }
-
-    // set p[priority - 1] to 2 if 1 (seen in s1)
-    for (char& c: s2) {
-        int priority_c = priority(c); // priority of char c
-        if (p[priority_c - 1] == 1) p[priority_c - 1] = 2;
-    }
-
-    // set p[priority - 1] to 3 if 2 (seen in s1 and s2)
-    for (char& c: s3) {
-        int priority_c = priority(c); // priority of char c
-        if (p[priority_c - 1] == 2) p[priority_c - 1] = 3;
+    vector<string> strings = {s1, s2, s3};
+    for (int k=0; k<3; k++) {
+        // go through all the strings
+        for (auto& c: strings[k]) {
+            int priority_c = priority(c); // get priority of current char in string
+            if (p[priority_c-1] == k) {p[priority_c - 1] = (k+1);}
+        }
     }
 
     int total_p = 0;
